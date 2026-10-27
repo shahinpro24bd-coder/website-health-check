@@ -1,5 +1,5 @@
 /* Website CMS adapter: talks directly to the website database from the browser,
-   so it works the same on any static host (Vercel, Lovable) with no host keys.
+   so it works the same on any static host with no host keys.
    Login, session checks and saves are verified inside the database. */
 (function () {
   var API = "https://c--90d5721b-93c6-4ff8-8f0d-f41fe753ce03-prod.lovable.cloud/rest/v1";
