@@ -2,8 +2,8 @@
    so it works the same on any static host (Vercel, Lovable) with no host keys.
    Login, session checks and saves are verified inside the database. */
 (function () {
-  var API = "https://jgpcvhfuboxesdszpchj.supabase.co/rest/v1";
-  var KEY = "sb_publishable_dxFmvVZ8TMGSPTaqH0VseA_D21aIE7F";
+  var API = "https://kfjcjyexuhtsolorbyim.supabase.co/rest/v1";
+  var KEY = "sb_publishable_MSiH29GIqfGD5UmAqyrb7w_I71lArYm";
   var TOKEN_KEY = "cms-admin-token";
   var MAX_IMAGE = 4 * 1024 * 1024;
   var originalFetch = window.fetch.bind(window);
