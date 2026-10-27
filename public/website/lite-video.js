@@ -14,7 +14,7 @@
     return m && m[1];
   }
   function convert(root) {
-    var frames = (root || document).querySelectorAll(".video-card iframe[src*='youtube']");
+    var frames = (root || document).querySelectorAll(".video-card iframe[src*='youtube']:not([data-played])");
     for (var i = 0; i < frames.length; i++) {
       var f = frames[i], id = idOf(f.getAttribute("src"));
       if (!id) continue;
@@ -34,7 +34,7 @@
     var src = this.dataset.src;
     f.src = src + (src.indexOf("?") > -1 ? "&" : "?") + "autoplay=1";
     f.setAttribute("allow", this.dataset.allow + "; autoplay");
-    f.setAttribute("allowfullscreen", "");
+    f.setAttribute("allowfullscreen", ""); f.setAttribute("data-played", "1");
     f.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
     this.replaceWith(f);
   }
