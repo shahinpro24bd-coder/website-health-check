@@ -2,7 +2,7 @@
    player only when the visitor taps play. Public pages only. */
 (function () {
   var css =
-    ".lite-yt{position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;cursor:pointer;background:#000 center/cover no-repeat;display:block}" +
+    ".lite-yt{position:relative;width:100%;height:100%;border:0;padding:0;cursor:pointer;background:#000 center/cover no-repeat;display:block}" +
     ".lite-yt::after{content:'';position:absolute;left:50%;top:50%;width:68px;height:48px;transform:translate(-50%,-50%);border-radius:14px;background:rgba(191,148,86,.92) url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M8 5v14l11-7z'/%3E%3C/svg%3E\") center/28px no-repeat;box-shadow:0 6px 20px rgba(0,0,0,.35);transition:transform .2s}" +
     ".lite-yt:hover::after{transform:translate(-50%,-50%) scale(1.08)}";
   var s = document.createElement("style");
