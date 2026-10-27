@@ -14,5 +14,5 @@
 - Verify editor credentials and session tokens only inside SECURITY DEFINER database functions; credential and session tables stay without client grants, and only cms_content is publicly readable.
 - Open the public home by default and keep public navigation separate from the authenticated *2.html editor copies.
 - Host original uploaded media using asset-pointer URLs and keep editable legacy HTML/CSS/JS in public/website for the preview.
-- Preserve asset-pointer URLs on Vercel with an external rewrite to the verified public asset origin; Vercel does not provide the platform's asset-serving path itself.
+- Preserve asset-pointer URLs on Vercel with an external rewrite to this project's preview origin; Vercel does not serve the platform asset path itself.
 - Derive the root favicon from the original website brand mark and remove the template favicon so browser tabs and direct favicon requests never use template branding.
