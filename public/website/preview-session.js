@@ -59,7 +59,8 @@
           API + "/cms_content?select=item&page=eq." + encodeURIComponent(page),
           { headers: headers(), cache: "no-store" }
         );
-        var rows = r.ok ? await r.json() : [];
+        if (!r.ok) return json({ error: "unavailable" }, 503);
+        var rows = await r.json();
         return json({ items: rows.map(function (row) { return row.item; }) });
       }
 
