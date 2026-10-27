@@ -28,10 +28,12 @@
       headers: { "Cache-Control": "no-cache" },
     })
       .then(function (r) {
+        if (!r.ok) throw new Error("unavailable");
         return r.json();
       })
       .then(function (d) {
-        return (d && d.items) || [];
+        if (!d || !Array.isArray(d.items)) throw new Error("bad");
+        return d.items;
       })
       .catch(function () {
         return null; // null = request failed
