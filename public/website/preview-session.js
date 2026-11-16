@@ -75,7 +75,13 @@
           p_username: String(creds.username || ""),
           p_password: String(creds.password || ""),
         });
-        if (!res.ok) return json({ error: "অনেকবার চেষ্টা হয়েছে, কিছুক্ষণ পরে আবার চেষ্টা করুন" }, 429);
+        if (!res.ok) {
+          var msg = String((res.d && (res.d.message || res.d.error)) || "");
+          if (/too many attempts/i.test(msg)) {
+            return json({ error: "অনেকবার ভুল পাসওয়ার্ড দেওয়া হয়েছে, ১৫ মিনিট পরে আবার চেষ্টা করুন" }, 429);
+          }
+          return json({ error: "সার্ভারের সাথে সংযোগ হচ্ছে না, কিছুক্ষণ পরে আবার চেষ্টা করুন" }, 503);
+        }
         if (!res.d) return json({ error: "ইউজারনেম বা পাসওয়ার্ড ভুল" }, 401);
         setToken(res.d);
         return json({ ok: true });
