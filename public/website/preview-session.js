@@ -40,7 +40,10 @@
     if (!t || !isEditor()) return false;
     var res = await rpc("cms_check", { p_token: t });
     if (res.ok && res.d === true) return true;
-    setToken(null);
+    // Only forget the login when the database really says it expired,
+    // never because the database was briefly unreachable.
+    if (res.ok) setToken(null);
+    else throw new Error("unavailable");
     return false;
   }
 
@@ -101,7 +104,15 @@
         var saved = await rpc("cms_save", {
           p_token: token, p_page: payload.page, p_items: payload.items || [],
         });
-        if (!saved.ok) return json({ error: "সেভ হয়নি, আবার লগইন করুন" }, 401);
+        if (!saved.ok) {
+          var why = String((saved.d && (saved.d.message || saved.d.error)) || "");
+          if (/not authenticated/i.test(why)) {
+            setToken(null);
+            return json({ error: "লগইনের মেয়াদ শেষ, আবার লগইন করুন" }, 401);
+          }
+          if (/invalid input/i.test(why)) return json({ error: "ভুল তথ্য, সেভ হয়নি" }, 400);
+          return json({ error: "সার্ভারের সাথে সংযোগ হচ্ছে না, কিছুক্ষণ পরে আবার সেভ করুন" }, 503);
+        }
         return json({ ok: true, saved: saved.d });
       }
 
@@ -114,7 +125,7 @@
         return json({ url: data });
       }
     } catch (e) {
-      return json({ error: "নেটওয়ার্ক সমস্যা" }, 503);
+      return json({ error: "সার্ভারের সাথে সংযোগ হচ্ছে না, কিছুক্ষণ পরে আবার চেষ্টা করুন" }, 503);
     }
     return json({ error: "Unknown request" }, 400);
   };

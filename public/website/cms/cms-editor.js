@@ -475,7 +475,7 @@
             return r.json();
           })
           .then(function (d) {
-            if (!d.url) return toast("\u0986\u09aa\u09b2\u09cb\u09a1 \u09ac\u09cd\u09af\u09b0\u09cd\u09a5");
+            if (!d.url) return toast("\u0986\u09aa\u09b2\u09cb\u09a1 \u09ac\u09cd\u09af\u09b0\u09cd\u09a5: " + (d.error || ""));
             if (kind === "image") el.setAttribute("src", d.url);
             else el.style.backgroundImage = "url('" + d.url + "')";
             record(el, kind, d.url);
@@ -751,7 +751,7 @@
           });
         })
         .then(function (res) {
-          if (!res.ok) return toast("\u09b8\u09c7\u099f\u09bf\u0982\u09b8 \u09b8\u09c7\u09ad \u09ac\u09cd\u09af\u09b0\u09cd\u09a5");
+          if (!res.ok) return toast("\u09b8\u09c7\u099f\u09bf\u0982\u09b8 \u09b8\u09c7\u09ad \u09ac\u09cd\u09af\u09b0\u09cd\u09a5: " + (res.d.error || ""));
           for (var k in settings) current[k] = settings[k];
           settings = {};
           try {
