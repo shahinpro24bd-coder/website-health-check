@@ -207,7 +207,8 @@
           return;
         }
 
-        if (e.target.closest(".navbar a[href]")) return;
+        /* menu links still navigate, but a logo/photo inside a link stays editable */
+        if (e.target.closest(".navbar a[href]") && !e.target.closest('[data-cms-kind="image"],[data-cms-kind="bg"]')) return;
         var el = e.target.closest("[data-cms-id]");
         if (!el) {
           /* clicking outside finishes the current edit */
@@ -496,6 +497,9 @@
             record(el, kind, d.url);
             toast("\u099b\u09ac\u09bf \u09af\u09c1\u0995\u09cd\u09a4 \u09b9\u09df\u09c7\u099b\u09c7");
             placePencils();
+          })
+          .catch(function () {
+            toast("\u09b8\u09be\u09b0\u09cd\u09ad\u09be\u09b0\u09c7\u09b0 \u09b8\u09be\u09a5\u09c7 \u09b8\u0982\u09af\u09cb\u0997 \u09b9\u099a\u09cd\u099b\u09c7 \u09a8\u09be");
           });
       };
       reader.readAsDataURL(file);
@@ -774,6 +778,9 @@
           } catch (e) {}
           updateBar();
           toast("\u09b8\u09c7\u099f\u09bf\u0982\u09b8 \u09b8\u09c7\u09ad \u09b9\u09df\u09c7\u099b\u09c7 \u2713");
+        })
+        .catch(function () {
+          toast("\u09b8\u09be\u09b0\u09cd\u09ad\u09be\u09b0\u09c7\u09b0 \u09b8\u09be\u09a5\u09c7 \u09b8\u0982\u09af\u09cb\u0997 \u09b9\u099a\u09cd\u099b\u09c7 \u09a8\u09be");
         });
     }
     if (!items.length) return settingItems.length ? undefined : toast("\u0995\u09cb\u09a8\u09cb \u09aa\u09b0\u09bf\u09ac\u09b0\u09cd\u09a4\u09a8 \u09a8\u09c7\u0987");
@@ -792,13 +799,19 @@
         changes = {};
         updateBar();
         toast("\u09b8\u09c7\u09ad \u09b9\u09df\u09c7\u099b\u09c7 \u2713");
+      })
+      .catch(function () {
+        toast("\u09b8\u09be\u09b0\u09cd\u09ad\u09be\u09b0\u09c7\u09b0 \u09b8\u09be\u09a5\u09c7 \u09b8\u0982\u09af\u09cb\u0997 \u09b9\u099a\u09cd\u099b\u09c7 \u09a8\u09be");
       });
   }
 
   function logout() {
-    fetch("/api/public/cms/logout", { method: "POST" }).then(function () {
-      location.reload();
-    });
+    fetch("/api/public/cms/logout", { method: "POST" })
+      .catch(function () {})
+      .then(function () {
+        try { localStorage.removeItem("cms-admin-token"); } catch (e) {}
+        location.reload();
+      });
   }
 
   // resume an existing session
