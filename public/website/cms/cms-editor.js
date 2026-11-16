@@ -89,9 +89,22 @@
     wrap.querySelector("#cms-cancel").onclick = function () {
       wrap.remove();
     };
-    wrap.querySelector("#cms-do-login").onclick = function () {
+    var loginGo = wrap.querySelector("#cms-do-login");
+    var errBox = wrap.querySelector("#cms-err");
+    function showErr(msg) {
+      errBox.style.display = "block";
+      errBox.textContent = msg;
+    }
+    wrap.querySelector("#cms-pass").addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter") loginGo.click();
+    });
+    loginGo.onclick = function () {
+      if (loginGo.disabled) return;
       var u = wrap.querySelector("#cms-user").value;
       var p = wrap.querySelector("#cms-pass").value;
+      if (!u.trim() || !p) return showErr("\u0987\u0989\u099c\u09be\u09b0\u09a8\u09c7\u09ae \u0993 \u09aa\u09be\u09b8\u0993\u09df\u09be\u09b0\u09cd\u09a1 \u09a6\u09bf\u09a8");
+      loginGo.disabled = true;
+      loginGo.textContent = "\u0985\u09aa\u09c7\u0995\u09cd\u09b7\u09be \u0995\u09b0\u09c1\u09a8...";
       fetch("/api/public/cms/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -103,14 +116,16 @@
           });
         })
         .then(function (res) {
-          if (!res.ok) {
-            var err = wrap.querySelector("#cms-err");
-            err.style.display = "block";
-            err.textContent = res.d.error || "login failed";
-            return;
-          }
+          if (!res.ok) return showErr((res.d && res.d.error) || "login failed");
           wrap.remove();
           enableEditing();
+        })
+        .catch(function () {
+          showErr("\u09b8\u09be\u09b0\u09cd\u09ad\u09be\u09b0\u09c7\u09b0 \u09b8\u09be\u09a5\u09c7 \u09b8\u0982\u09af\u09cb\u0997 \u09b9\u099a\u09cd\u099b\u09c7 \u09a8\u09be");
+        })
+        .then(function () {
+          loginGo.disabled = false;
+          loginGo.textContent = "\u09b2\u0997\u0987\u09a8";
         });
     };
   }

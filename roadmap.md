@@ -7,3 +7,5 @@
 - [x] Require server-verified admin login on every *2.html editor copy.
 - [x] Verify public pages, incorrect login, correct login, Settings changes, and logout.- [x] Make admin login work on Vercel without host keys (database-verified login).
 - [x] Save editor changes live so every visitor sees them on the public pages.
+- [ ] Real admin login/save test with admin / admin123 — blocked: website database is down (won't start after several restarts).
+- [ ] Make wrong-password lockout per visitor instead of shared — blocked: needs the database running.
