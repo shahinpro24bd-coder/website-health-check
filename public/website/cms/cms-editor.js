@@ -9,6 +9,7 @@
   var css = document.createElement("style");
   css.textContent = [
     ".cms-bar{position:fixed;right:16px;bottom:16px;z-index:2147483000;display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e5e5e5;border-radius:12px;padding:10px 14px;box-shadow:0 8px 30px rgba(0,0,0,.18);font-family:system-ui,'Hind Siliguri',sans-serif;font-size:14px}",
+    "@media (max-width:600px){.cms-bar{left:8px;right:8px;bottom:8px;gap:6px;padding:8px;flex-wrap:wrap;justify-content:center}.cms-bar .cms-btn{padding:8px 10px;white-space:nowrap}.cms-bar #cms-count{width:100%;text-align:center;font-size:13px}.cms-panel{right:8px;left:8px;width:auto;bottom:130px}}",
     ".cms-btn{border:0;border-radius:8px;padding:8px 14px;font-size:14px;cursor:pointer;font-family:inherit}",
     ".cms-btn-save{background:#16a34a;color:#fff}",
     ".cms-btn-out{background:#111827;color:#fff}",
